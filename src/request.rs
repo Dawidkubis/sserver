@@ -6,7 +6,7 @@ use std::fs::read_to_string;
 use std::io;
 
 #[derive(Debug, Deserialize)]
-pub struct Git{
+pub struct Git {
 	pub url: String,
 	pub name: String,
 }

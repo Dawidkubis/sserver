@@ -38,12 +38,7 @@ fn main() {
 		.unwrap();
 
 	rocket::custom(config)
-		.mount(
-			"/",
-			routes![
-				routes::index,
-			],
-		)
-		.register(catchers![static_server::not_found,])
+		.mount("/", routes![routes::index,])
+		.register(catchers![routes::not_found,])
 		.launch();
 }
