@@ -12,17 +12,17 @@ extern crate toml;
 
 #[macro_use]
 mod response;
-mod request;
+mod models;
 mod routes;
 
 use rocket::config::{Config, Environment};
-use structopt::StructOpt;
-use std::thread;
-use std::time;
 use std::path::Path;
 use std::process::Command;
+use std::thread;
+use std::time;
+use structopt::StructOpt;
 
-static WWW: &'static str = "www";
+pub static WWW: &'static str = "www";
 
 /// Specify which port to run on
 /// `8000` is the default
@@ -37,17 +37,21 @@ fn git_update() {
 	loop {
 		thread::sleep(time::Duration::from_secs(60));
 
-		let settings = match request::Settings::get() {
+		let settings = match models::Settings::get() {
 			Ok(s) => s,
 			Err(e) => {
 				eprintln!("{:?}", e);
-				continue
-			},
+				continue;
+			}
 		};
-		
-		let path = Path::new()
-		
-	}	
+
+		let cmd = Command::new("git").arg("pull").current_dir(WWW).spawn();
+
+		match cmd {
+			Err(e) => eprintln!("{:?}", e),
+			_ => (),
+		};
+	}
 }
 
 fn main() {
@@ -59,7 +63,7 @@ fn main() {
 			None => 8000,
 		})
 		.unwrap();
-	
+
 	thread::spawn(git_update);
 
 	rocket::custom(config)

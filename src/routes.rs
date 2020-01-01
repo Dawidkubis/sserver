@@ -1,4 +1,4 @@
-use crate::request::Settings;
+use crate::models::Settings;
 use rocket::Request;
 use std::path::PathBuf;
 
