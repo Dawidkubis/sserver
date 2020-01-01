@@ -1,7 +1,10 @@
 use rocket::response::content;
 use std::fs::read_to_string;
+use anyhow::Result;
 
 pub type HTML = content::Html<String>;
+
+pub struct File;
 
 #[macro_export]
 macro_rules! markdown {

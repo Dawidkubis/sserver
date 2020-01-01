@@ -18,6 +18,8 @@ mod routes;
 use rocket::config::{Config, Environment};
 use structopt::StructOpt;
 use std::thread;
+use std::time;
+use std::path::Path;
 use std::process::Command;
 
 /// Specify which port to run on
@@ -30,7 +32,32 @@ struct Cli {
 }
 
 fn git_update(){
-	
+	loop {
+		thread::sleep(time::Duration::from_secs(60));
+		println!("UPDATING");
+
+		let settings = match request::Settings::get() {
+			Ok(s) => s,
+			Err(e) => panic!("{}", e)
+		};
+
+		let path = Path::new(&settings.git.name);
+		
+		if path.is_dir() {
+			Command::new("git")
+				.arg("pull")
+				.current_dir(path)
+				.spawn()
+				.unwrap();
+
+			} else {
+			Command::new("git")
+				.arg("clone")
+				.arg(settings.git.url)
+				.spawn()
+				.unwrap();
+		}
+	}	
 }
 
 fn main() {
@@ -42,6 +69,8 @@ fn main() {
 			None => 8000,
 		})
 		.unwrap();
+	
+	thread::spawn(git_update);
 
 	rocket::custom(config)
 		.mount("/", routes![routes::index, routes::path,])

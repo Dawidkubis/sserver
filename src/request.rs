@@ -4,7 +4,6 @@ use rocket::Outcome;
 use anyhow::{Result, Error};
 use serde_derive::Deserialize;
 use std::fs::read_to_string;
-use std::io;
 
 static SETTINGS: &'static str = "settings.toml";
 
