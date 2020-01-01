@@ -1,12 +1,9 @@
-use crate::response::{md, HTML};
-use rocket::response::content::Html;
-use rocket::response::NamedFile;
 use rocket::Request;
-use std::fs::read_to_string;
+use crate::request::Settings;
 
 /// Index
 #[get("/")]
-pub fn index() -> String {
+pub fn index(s: Settings) -> String {
 	String::from("wip")
 }
 

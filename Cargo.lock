@@ -280,19 +280,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "kubisserver"
-version = "0.1.0"
-dependencies = [
- "anyhow",
- "comrak",
- "rocket",
- "serde",
- "serde_derive",
- "structopt",
- "toml 0.5.5",
-]
-
-[[package]]
 name = "language-tags"
 version = "0.2.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -632,6 +619,19 @@ name = "smallvec"
 version = "1.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "44e59e0c9fa00817912ae6e4e6e3c4fe04455e75699d06eedc7d85917ed8e8f4"
+
+[[package]]
+name = "sserver"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "comrak",
+ "rocket",
+ "serde",
+ "serde_derive",
+ "structopt",
+ "toml 0.5.5",
+]
 
 [[package]]
 name = "state"
