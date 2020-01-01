@@ -36,7 +36,7 @@ fn git_update(){
 fn main() {
 	let opt = Cli::from_args();
 
-	let config = Config::build(Environment::Production)
+	let config = Config::build(Environment::Development)
 		.port(match opt.port {
 			Some(i) => i,
 			None => 8000,
