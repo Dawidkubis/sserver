@@ -22,6 +22,8 @@ use std::time;
 use std::path::Path;
 use std::process::Command;
 
+static WWW: &'static str = "www";
+
 /// Specify which port to run on
 /// `8000` is the default
 #[derive(StructOpt)]
@@ -31,7 +33,7 @@ struct Cli {
 	port: Option<u16>,
 }
 
-fn git_update(){
+fn git_update() {
 	loop {
 		thread::sleep(time::Duration::from_secs(60));
 
@@ -42,29 +44,9 @@ fn git_update(){
 				continue
 			},
 		};
-
-		let path = Path::new(&settings.git.name);
 		
-		if path.is_dir() {
-			Command::new("git")
-				.arg("pull")
-				.current_dir(path)
-				.spawn()
-				.unwrap_or(|e| {
-					eprintln!("{:?}", e);
-					continue
-				});
-
-			} else {
-			Command::new("git")
-				.arg("clone")
-				.arg(settings.git.url)
-				.spawn()
-				.unwrap_or(|e| {
-					eprintln!("{:?}", e);
-					continue
-				});
-		}
+		let path = Path::new()
+		
 	}	
 }
 

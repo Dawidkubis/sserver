@@ -10,7 +10,6 @@ static SETTINGS: &'static str = "settings.toml";
 #[derive(Debug, Deserialize)]
 pub struct Git {
 	pub url: String,
-	pub name: String,
 }
 
 #[derive(Debug, Deserialize)]
