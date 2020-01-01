@@ -4,6 +4,8 @@
 extern crate rocket;
 #[macro_use]
 extern crate anyhow;
+#[macro_use]
+extern crate lazy_static;
 extern crate comrak;
 extern crate serde;
 extern crate serde_derive;
