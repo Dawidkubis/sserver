@@ -5,7 +5,6 @@ extern crate rocket;
 #[macro_use]
 extern crate anyhow;
 extern crate comrak;
-extern crate lazy_static;
 extern crate serde;
 extern crate serde_derive;
 extern crate structopt;
@@ -13,10 +12,8 @@ extern crate toml;
 
 #[macro_use]
 mod response;
-mod cloud;
-mod films;
 mod request;
-mod static_server;
+mod routes;
 
 use rocket::config::{Config, Environment};
 use structopt::StructOpt;
