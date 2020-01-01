@@ -41,12 +41,7 @@ fn main() {
 		.mount(
 			"/",
 			routes![
-				static_server::index,
-				static_server::css,
-				static_server::favicon,
-				static_server::git,
-				cloud::cloud,
-				films::films,
+				routes::index,
 			],
 		)
 		.register(catchers![static_server::not_found,])

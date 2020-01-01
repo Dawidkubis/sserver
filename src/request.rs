@@ -6,8 +6,15 @@ use std::fs::read_to_string;
 use std::io;
 
 #[derive(Debug, Deserialize)]
+pub struct Git{
+	pub url: String,
+	pub name: String,
+}
+
+#[derive(Debug, Deserialize)]
 pub struct Settings {
-	pub data_path: String,
+	pub index: String,
+	pub git: Git,
 }
 
 impl<'a, 'r> FromRequest<'a, 'r> for Settings {

@@ -1,0 +1,5 @@
+index = "index.html"
+
+[git]
+url = "http://kubis/dawidkubis/frontend-test.git"
+name = "frontend-test"

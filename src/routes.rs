@@ -4,23 +4,10 @@ use rocket::response::NamedFile;
 use rocket::Request;
 use std::fs::read_to_string;
 
-/// macro for opening static files
-macro_rules! open {
-	($e:expr) => {
-		NamedFile::open($e).unwrap()
-	};
-}
-
-macro_rules! open_md {
-	($e:expr) => {
-		Html(md(&read_to_string($e).unwrap()))
-	};
-}
-
 /// Index
 #[get("/")]
-pub fn index() -> HTML {
-	open_md!("frontend/index.md")
+pub fn index() -> String {
+	String::from("wip")
 }
 
 // Catchers
