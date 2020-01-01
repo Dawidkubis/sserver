@@ -34,11 +34,13 @@ struct Cli {
 fn git_update(){
 	loop {
 		thread::sleep(time::Duration::from_secs(60));
-		println!("UPDATING");
 
 		let settings = match request::Settings::get() {
 			Ok(s) => s,
-			Err(e) => panic!("{}", e)
+			Err(e) => {
+				eprintln!("{:?}", e);
+				continue
+			},
 		};
 
 		let path = Path::new(&settings.git.name);
@@ -48,14 +50,20 @@ fn git_update(){
 				.arg("pull")
 				.current_dir(path)
 				.spawn()
-				.unwrap();
+				.unwrap_or(|e| {
+					eprintln!("{:?}", e);
+					continue
+				});
 
 			} else {
 			Command::new("git")
 				.arg("clone")
 				.arg(settings.git.url)
 				.spawn()
-				.unwrap();
+				.unwrap_or(|e| {
+					eprintln!("{:?}", e);
+					continue
+				});
 		}
 	}	
 }

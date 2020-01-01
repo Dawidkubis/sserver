@@ -32,7 +32,7 @@ impl<'a, 'r> FromRequest<'a, 'r> for Settings {
 	fn from_request(_request: &'a Request<'r>) -> request::Outcome<Self, Self::Error> {
 		match Self::get() {
 			Ok(s) => Outcome::Success(s),
-			Err(e) => Outcome::Failure((Status::InternalServerError, anyhow!("{}", e)))
+			Err(e) => Outcome::Failure((Status::InternalServerError, anyhow!("{:?}", e)))
 		}
 	}
 }
