@@ -1,9 +1,12 @@
 use rocket::http::Status;
 use rocket::request::{self, FromRequest, Request};
 use rocket::Outcome;
+use anyhow::{Result, Error};
 use serde_derive::Deserialize;
 use std::fs::read_to_string;
 use std::io;
+
+static SETTINGS: &'static str = "settings.toml";
 
 #[derive(Debug, Deserialize)]
 pub struct Git {
@@ -17,16 +20,21 @@ pub struct Settings {
 	pub git: Git,
 }
 
-impl<'a, 'r> FromRequest<'a, 'r> for Settings {
-	type Error = io::Error;
+impl Settings {
+	pub fn get() -> Result<Self> {
+		let s = &read_to_string(SETTINGS)?;
+		Ok(toml::from_str::<Self>(&s)?)
+	}
+}
 
-	fn from_request(_request: &'a Request<'r>) -> request::Outcome<Self, io::Error> {
-		match read_to_string("settings.toml") {
-			Ok(s) => match toml::from_str::<Settings>(&s) {
-				Ok(s) => Outcome::Success(s),
-				Err(e) => Outcome::Failure((Status::InternalServerError, io::Error::from(e))),
-			},
-			Err(e) => Outcome::Failure((Status::InternalServerError, e)),
+impl<'a, 'r> FromRequest<'a, 'r> for Settings {
+	type Error = Error;
+
+	fn from_request(_request: &'a Request<'r>) -> request::Outcome<Self, Self::Error> {
+		match Self::get() {
+			Ok(s) => Outcome::Success(s),
+			Err(e) => Outcome::Failure((Status::InternalServerError, anyhow!("{}", e)))
 		}
 	}
 }
+

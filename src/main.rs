@@ -17,6 +17,8 @@ mod routes;
 
 use rocket::config::{Config, Environment};
 use structopt::StructOpt;
+use std::thread;
+use std::process::Command;
 
 /// Specify which port to run on
 /// `8000` is the default
@@ -25,6 +27,10 @@ struct Cli {
 	/// the port on which to run
 	#[structopt(short, long)]
 	port: Option<u16>,
+}
+
+fn git_update(){
+	
 }
 
 fn main() {
