@@ -1,15 +1,14 @@
-use crate::models::Settings;
 use rocket::Request;
 use std::path::PathBuf;
 
 /// Index
 #[get("/")]
-pub fn index(s: Settings) -> String {
+pub fn index() -> String {
 	String::from("wip")
 }
 
 #[get("/<path..>")]
-pub fn path(path: PathBuf, s: Settings) -> String {
+pub fn path(path: PathBuf) -> String {
 	String::from("wyp")
 }
 
