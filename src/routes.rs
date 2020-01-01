@@ -1,10 +1,16 @@
-use rocket::Request;
 use crate::request::Settings;
+use rocket::Request;
+use std::path::PathBuf;
 
 /// Index
 #[get("/")]
 pub fn index(s: Settings) -> String {
 	String::from("wip")
+}
+
+#[get("/<path..>")]
+pub fn path(path: PathBuf, s: Settings) -> String {
+	String::from("wyp")
 }
 
 // Catchers
