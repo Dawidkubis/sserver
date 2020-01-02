@@ -26,18 +26,15 @@ pub static SETTINGS_PATH: &'static str = "settings.toml";
 pub static WWW: &'static str = "www";
 
 lazy_static! {
-	pub static ref SETTINGS: Settings = {
-		let s = Settings::get().expect(&format!("Unable to parse {}", SETTINGS_PATH));
-
-		s.git.clone().expect("Failed to clone git repo");
-
-		s
-	};
+	pub static ref SETTINGS: Settings = Settings::get()
+		.expect(&format!("Unable to parse {}", SETTINGS_PATH));
 }
 
 fn main() {
+	// get cmd args
 	let opt = Cli::from_args();
 
+	// rocket config
 	let config = Config::build(Environment::Development)
 		.port(match opt.port {
 			Some(i) => i,
@@ -45,11 +42,16 @@ fn main() {
 		})
 		.unwrap();
 
+	// git repo update
 	thread::spawn(|| loop {
 		thread::sleep(time::Duration::from_secs(60));
-		SETTINGS.git.update();
+		match SETTINGS.git.update() {
+			Ok(s) => println!("git repo update: status = {}", s.status),
+			Err(e) => eprintln!("{:?}", e),
+		}
 	});
 
+	// rocket server init
 	rocket::custom(config)
 		.mount("/", routes![routes::index, routes::path,])
 		.register(catchers![routes::not_found,])
