@@ -22,12 +22,12 @@ use rocket::config::{Config, Environment};
 use std::{thread, time};
 use structopt::StructOpt;
 
-pub static SETTINGS_PATH: &'static str = "settings.toml";
-pub static WWW: &'static str = "www";
+pub const SETTINGS_PATH: &'static str = "settings.toml";
+pub const WWW: &'static str = "www";
 
 lazy_static! {
-	pub static ref SETTINGS: Settings = Settings::get()
-		.expect(&format!("Unable to parse {}", SETTINGS_PATH));
+	pub static ref SETTINGS: Settings =
+		Settings::get().expect(&format!("Unable to parse {}", SETTINGS_PATH));
 }
 
 fn main() {

@@ -1,4 +1,5 @@
-index = "index.html"
+index = "README.md"
+skeleton = "main.html"
 
 [git]
 url = "http://kubis/dawidkubis/frontend-test.git"

@@ -52,6 +52,8 @@ impl Git {
 pub struct Settings {
 	/// index of the page
 	pub index: String,
+	/// name of skeleton file
+	pub skeleton: String,
 	/// git
 	pub git: Git,
 }
