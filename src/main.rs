@@ -8,7 +8,6 @@ extern crate anyhow;
 extern crate lazy_static;
 extern crate comrak;
 extern crate serde;
-extern crate serde_derive;
 extern crate structopt;
 extern crate toml;
 
@@ -16,11 +15,13 @@ extern crate toml;
 mod response;
 mod models;
 mod routes;
+mod settings;
 
-use models::{Cli, Settings};
+use models::Cli;
 use rocket::config::{Config, Environment};
 use std::{thread, time};
 use structopt::StructOpt;
+use settings::Settings;
 
 pub const SETTINGS_PATH: &'static str = "settings.toml";
 pub const WWW: &'static str = "www";
