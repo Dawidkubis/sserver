@@ -12,9 +12,7 @@ pub fn index() -> File {
 
 #[get("/<path..>")]
 pub fn path(path: PathBuf) -> Option<File> {
-	let mut p = PathBuf::new();
-	p.push(WWW);
-	p.push(path);
+	let p = [PathBuf::from(WWW), path].iter().collect::<PathBuf>();
 	File::open(p).ok()
 }
 
