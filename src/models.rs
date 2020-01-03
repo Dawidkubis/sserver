@@ -50,12 +50,14 @@ impl Git {
 #[derive(Debug, Deserialize)]
 /// Representation of SETTINGS_PATH file
 pub struct Settings {
+	/// git
+	pub git: Git,
 	/// index of the page
 	pub index: String,
 	/// name of skeleton file
 	pub skeleton: String,
-	/// git
-	pub git: Git,
+	/// should all the files be served?
+	pub serve_all: bool,
 }
 
 impl Settings {

@@ -1,5 +1,15 @@
-index = "README.md"
-skeleton = "main.html"
-
+# git settings
 [git]
+# url of git repo
+# used as the frontend
 url = "http://kubis/dawidkubis/frontend-test.git"
+
+# path to index page
+index = "README.md"
+# path to skeleton file
+# used to generate markdown pages
+skeleton = "main.html"
+# should all the files from the git
+# repo be served?
+serve_all = true
+
