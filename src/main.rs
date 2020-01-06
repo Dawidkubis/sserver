@@ -18,8 +18,7 @@ mod routes;
 mod settings;
 
 use models::Cli;
-use rocket::config::{Config, Environment};
-use std::{thread, time};
+use std::{thread, time, env};
 use structopt::StructOpt;
 use settings::Settings;
 
@@ -35,14 +34,11 @@ fn main() {
 	// get cmd args
 	let opt = Cli::from_args();
 
-	// TODO set as env pls u fucking retard
-	// rocket config
-	let config = Config::build(Environment::Development)
-		.port(match opt.port {
-			Some(i) => i,
-			None => 8000,
-		})
-		.unwrap();
+	// port setting
+	match opt.port {
+		Some(i) => env::set_var("ROCKET_PORT", format!("{}", i)),
+		None => (),
+	}
 
 	// git repo update
 	thread::spawn(|| loop {
@@ -54,7 +50,7 @@ fn main() {
 	});
 
 	// rocket server init
-	rocket::custom(config)
+	rocket::ignite()
 		.mount("/", routes![routes::index, routes::path,])
 		.register(catchers![routes::not_found,])
 		.launch();
