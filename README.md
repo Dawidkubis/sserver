@@ -17,7 +17,7 @@ cargo build --release
 
 ## Configuration
 Configuration is done in the `settings.toml` file.
-### adding custom responses
+### adding custom responses (not yet)
 To add a custom response add the following to the `settings.toml` file:
 ```
 [[response]]
@@ -34,4 +34,4 @@ Sserver is able to serve any of the following file types:
 + raw text
 
 ## Ports
-Run with `-p <port_number>` to run Sserver on specific port.
+Run with `-p <port_number>` to run Sserver on specific port (8000 is the default).
