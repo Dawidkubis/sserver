@@ -35,6 +35,7 @@ fn main() {
 	// get cmd args
 	let opt = Cli::from_args();
 
+	// TODO set as env pls u fucking retard
 	// rocket config
 	let config = Config::build(Environment::Development)
 		.port(match opt.port {

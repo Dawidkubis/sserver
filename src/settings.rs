@@ -4,11 +4,14 @@ use std::fs::read_to_string;
 use anyhow::{Result, Context};
 use crate::{WWW, SETTINGS_PATH};
 
+// TODO make the impl's better
 /// Representation of a git repo
 #[derive(Debug, Deserialize)]
 pub struct Git {
 	/// git repo url - ssh or http
 	pub url: String,
+	/// branch
+	pub branch: String,
 }
 
 #[derive(Debug, Deserialize)]
@@ -29,7 +32,7 @@ pub struct Settings {
 	/// should all the files be served?
 	pub serve_all: bool,
 	/// list of responses
-	pub response: Vec<Rsp>,
+	pub response: Option<Vec<Rsp>>,
 }
 
 impl Git {
