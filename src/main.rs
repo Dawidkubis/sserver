@@ -13,11 +13,12 @@ extern crate toml;
 
 #[macro_use]
 mod response;
-mod models;
+mod cli;
 mod routes;
 mod settings;
+mod rsp;
 
-use models::Cli;
+use cli::Cli;
 use std::{thread, time, env};
 use structopt::StructOpt;
 use settings::Settings;
