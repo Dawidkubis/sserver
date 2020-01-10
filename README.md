@@ -17,6 +17,12 @@ cargo build --release
 
 ## Configuration
 Configuration is done in the `settings.toml` file.
++ `index` - corresponds to what you get when you GET your site's url
++ `skeleton` - a skeleton html file, required for markdown generation
++ `serve_all` - does nothing... yet
+### git
++ `url` - url of your git repo
++ `branch` - the branch that should be used
 ### adding custom responses (not yet)
 To add a custom response add the following to the `settings.toml` file:
 ```
