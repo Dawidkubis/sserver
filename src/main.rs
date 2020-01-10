@@ -16,9 +16,10 @@ extern crate reqwest;
 
 #[macro_use]
 mod response;
+#[macro_use]
+mod settings;
 mod cli;
 mod routes;
-mod settings;
 //mod rsp;
 
 use cli::Cli;
@@ -30,8 +31,10 @@ pub const SETTINGS_PATH: &'static str = "settings.toml";
 pub const WWW: &'static str = "www";
 
 lazy_static! {
-	pub static ref SETTINGS: Settings =
-		Settings::get().expect(&format!("Unable to parse {}", SETTINGS_PATH));
+	pub static ref SETTINGS: Settings = match Settings::get() {
+		Ok(s) => s,
+		Err(e) => panic!("Unable to parse {} : {}", SETTINGS_PATH, e)
+	};
 }
 
 fn main() {

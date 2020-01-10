@@ -1,9 +1,16 @@
 use serde::Deserialize;
 use std::process::{Command, Output};
 use std::fs::{read_to_string, remove_dir_all};
-use std::path::Path;
+use std::path::{Path, PathBuf};
 use anyhow::{Result, Context};
 use crate::{WWW, SETTINGS_PATH};
+
+#[macro_export]
+macro_rules! path {
+	($e:expr) => {
+		[WWW, $e].iter().collect::<PathBuf>()
+	};
+}
 
 /// Representation of a git repo
 #[derive(Debug, Deserialize)]
@@ -47,8 +54,6 @@ impl Git {
 #[derive(Debug, Deserialize)]
 /// Representation of SETTINGS_PATH file
 pub struct Settings {
-	/// git
-	pub git: Git,
 	/// index of the page
 	pub index: String,
 	/// name of skeleton file
@@ -57,6 +62,8 @@ pub struct Settings {
 	pub serve_all: bool,
 	/// list of responses
 	pub response: Option<String>,
+	/// git
+	pub git: Git,
 }
 
 impl Settings {
@@ -68,20 +75,22 @@ impl Settings {
 		// handle exceptions
 		// - responses file doesnt exist (if specified)
 		// or is invalid
-
-		remove_dir_all(WWW)?;
+		
+		if Path::new(WWW).is_dir() {
+			remove_dir_all(WWW)?;
+		}
 
 		let o = s.git.clone()?;
 		match o.status.success() {
 			true => (),
 			false => return Err(anyhow!("git error : {:?}", o)),
 		}
-
-		if !Path::new(&s.index).is_file() {
-			return Err(anyhow!("index file not found : {}", s.index))
+		
+		if !path!(&s.index).is_file() {
+			return Err(anyhow!("index file not found : {:?}", s.index))
 		}
 		
-		if !Path::new(&s.skeleton).is_file() {
+		if !path!(&s.skeleton).is_file() {
 			return Err(anyhow!("skeleton file not found : {}", s.skeleton))
 		}
 		
