@@ -1,7 +1,7 @@
 use crate::response::File;
 use crate::{path, SETTINGS, WWW};
 use rocket::Request;
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 
 /// Index
 #[get("/")]
@@ -12,7 +12,7 @@ pub fn index() -> File {
 
 #[get("/<path..>")]
 pub fn path(path: PathBuf) -> Option<File> {
-	let p = [PathBuf::from(WWW), path].iter().collect::<PathBuf>();
+	let p = Path::new(WWW).join(path);
 	File::open(p).ok()
 }
 
