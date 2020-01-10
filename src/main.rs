@@ -9,10 +9,10 @@ extern crate lazy_static;
 //#[macro_use]
 //extern crate thiserror;
 extern crate comrak;
+extern crate reqwest;
 extern crate serde;
 extern crate structopt;
 extern crate toml;
-extern crate reqwest;
 
 #[macro_use]
 mod response;
@@ -23,9 +23,9 @@ mod routes;
 //mod rsp;
 
 use cli::Cli;
-use std::{thread, time, env};
-use structopt::StructOpt;
 use settings::Settings;
+use std::{env, thread, time};
+use structopt::StructOpt;
 
 pub const SETTINGS_PATH: &'static str = "settings.toml";
 pub const WWW: &'static str = "www";
@@ -33,7 +33,7 @@ pub const WWW: &'static str = "www";
 lazy_static! {
 	pub static ref SETTINGS: Settings = match Settings::get() {
 		Ok(s) => s,
-		Err(e) => panic!("Unable to parse {} : {}", SETTINGS_PATH, e)
+		Err(e) => panic!("Unable to parse {} : {}", SETTINGS_PATH, e),
 	};
 }
 

@@ -1,5 +1,5 @@
 use crate::response::File;
-use crate::{SETTINGS, WWW, path};
+use crate::{path, SETTINGS, WWW};
 use rocket::Request;
 use std::path::PathBuf;
 

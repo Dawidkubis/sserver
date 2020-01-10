@@ -1,9 +1,9 @@
+use crate::{SETTINGS_PATH, WWW};
+use anyhow::{Context, Result};
 use serde::Deserialize;
-use std::process::{Command, Output};
 use std::fs::{read_to_string, remove_dir_all};
 use std::path::{Path, PathBuf};
-use anyhow::{Result, Context};
-use crate::{WWW, SETTINGS_PATH};
+use std::process::{Command, Output};
 
 #[macro_export]
 macro_rules! path {
@@ -75,7 +75,7 @@ impl Settings {
 		// handle exceptions
 		// - responses file doesnt exist (if specified)
 		// or is invalid
-		
+
 		if Path::new(WWW).is_dir() {
 			remove_dir_all(WWW)?;
 		}
@@ -85,15 +85,15 @@ impl Settings {
 			true => (),
 			false => return Err(anyhow!("git error : {:?}", o)),
 		}
-		
+
 		if !path!(&s.index).is_file() {
-			return Err(anyhow!("index file not found : {:?}", s.index))
+			return Err(anyhow!("index file not found : {:?}", s.index));
 		}
-		
+
 		if !path!(&s.skeleton).is_file() {
-			return Err(anyhow!("skeleton file not found : {}", s.skeleton))
+			return Err(anyhow!("skeleton file not found : {}", s.skeleton));
 		}
-		
+
 		Ok(s)
 	}
 }

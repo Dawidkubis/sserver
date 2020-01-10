@@ -7,4 +7,3 @@ pub struct Cli {
 	#[structopt(short, long)]
 	pub port: Option<u16>,
 }
-
