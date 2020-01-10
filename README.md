@@ -15,6 +15,26 @@ make
 cargo build --release
 ```
 
+## Usage
+Create a git repository with files to be served in it (html, markdown).
+Create a skeleton file inside your repo that has `{}` in place of markdown.
+Something along the lines of:
+```html
+<!DOCTYPE html>
+<html>
+	<head>
+	</head>
+	<body>
+	{}
+	</body>
+</html>
+```
+Edit the `settings.toml` file to make sure Sserver clones your repo with the right branch.
+Run Sserver.
+
+To edit your site just edit your repository and your changes will be pulled by Sserver.
+As of now Sserver serves all the files in the repository.
+
 ## Configuration
 Configuration is done in the `settings.toml` file.
 + `index` - corresponds to what you get when you GET your site's url

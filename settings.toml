@@ -1,14 +1,14 @@
 # the index of the site
 index = "README.md"
 # skeleton for markdown
-skeleton = "skeleton.html"
+skeleton = "main.html"
 # shall all the repo's files be served with their paths?
 serve_all = true
 
 # the repo settings
 [git]
 # url of the repo
-url = "https://github.com/Dawidkubis/python-gjk.git"
+url = "<git url>"
 # branch of the repo
 branch = "master"
 
