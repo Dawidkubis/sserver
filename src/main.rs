@@ -27,8 +27,8 @@ use settings::Settings;
 use std::{env, thread, time};
 use structopt::StructOpt;
 
-pub const SETTINGS_PATH: &'static str = "settings.toml";
-pub const WWW: &'static str = "www";
+pub const SETTINGS_PATH: &str = "settings.toml";
+pub const WWW: &str = "www";
 
 lazy_static! {
 	pub static ref SETTINGS: Settings = match Settings::get() {
@@ -45,9 +45,8 @@ fn main() {
 	&*SETTINGS;
 
 	// port setting
-	match opt.port {
-		Some(i) => env::set_var("ROCKET_PORT", format!("{}", i)),
-		None => (),
+	if let Some(i) = opt.port {
+		env::set_var("ROCKET_PORT", format!("{}", i));
 	}
 
 	// git repo update

@@ -81,9 +81,9 @@ impl Settings {
 		}
 
 		let o = s.git.clone()?;
-		match o.status.success() {
-			true => (),
-			false => return Err(anyhow!("git error : {:?}", o)),
+
+		if !o.status.success() {
+			return Err(anyhow!("git error : {:?}", o));
 		}
 
 		if !path!(&s.index).is_file() {
