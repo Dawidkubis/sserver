@@ -1,5 +1,5 @@
 index = "README.md"
-skeleton = "main.html"
+skeleton = "skeleton.html"
 serve_all = true
 
 [git]

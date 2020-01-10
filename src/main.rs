@@ -6,17 +6,20 @@ extern crate rocket;
 extern crate anyhow;
 #[macro_use]
 extern crate lazy_static;
+//#[macro_use]
+//extern crate thiserror;
 extern crate comrak;
 extern crate serde;
 extern crate structopt;
 extern crate toml;
+extern crate reqwest;
 
 #[macro_use]
 mod response;
 mod cli;
 mod routes;
 mod settings;
-mod rsp;
+//mod rsp;
 
 use cli::Cli;
 use std::{thread, time, env};
@@ -34,6 +37,9 @@ lazy_static! {
 fn main() {
 	// get cmd args
 	let opt = Cli::from_args();
+
+	// check settings
+	&*SETTINGS;
 
 	// port setting
 	match opt.port {

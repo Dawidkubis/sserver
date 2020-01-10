@@ -1,10 +1,10 @@
 use serde::Deserialize;
 use std::process::{Command, Output};
-use std::fs::read_to_string;
+use std::fs::{read_to_string, remove_dir_all};
+use std::path::Path;
 use anyhow::{Result, Context};
 use crate::{WWW, SETTINGS_PATH};
 
-// TODO make the impl's better
 /// Representation of a git repo
 #[derive(Debug, Deserialize)]
 pub struct Git {
@@ -66,12 +66,25 @@ impl Settings {
 		let s = toml::from_str::<Self>(&s)?;
 
 		// handle exceptions
-		// 1 - skeleton doesnt exist
-		// 2 - git url doesnt exist
-		// 3 - git branch doesnt exist
-		// 4 - responses file doesnt exist (if specified)
+		// - responses file doesnt exist (if specified)
 		// or is invalid
-		// 5 - index doesnt exist
+
+		remove_dir_all(WWW)?;
+
+		let o = s.git.clone()?;
+		match o.status.success() {
+			true => (),
+			false => return Err(anyhow!("git error : {:?}", o)),
+		}
+
+		if !Path::new(&s.index).is_file() {
+			return Err(anyhow!("index file not found : {}", s.index))
+		}
+		
+		if !Path::new(&s.skeleton).is_file() {
+			return Err(anyhow!("skeleton file not found : {}", s.skeleton))
+		}
+		
 		Ok(s)
 	}
 }
