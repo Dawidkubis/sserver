@@ -1,12 +1,12 @@
 use crate::response::File;
-use crate::{SETTINGS, WWW};
+use crate::{SETTINGS, WWW, path};
 use rocket::Request;
 use std::path::PathBuf;
 
 /// Index
 #[get("/")]
 pub fn index() -> File {
-	let path = [WWW, &SETTINGS.index].iter().collect::<PathBuf>();
+	let path = path!(&SETTINGS.index);
 	File::open(path).unwrap()
 }
 
