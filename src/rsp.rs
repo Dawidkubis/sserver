@@ -16,7 +16,7 @@ pub struct Route {
 
 #[derive(Debug, Deserialize)]
 pub struct Rsp {
-	pub response: Option<Vec<Route>>,
+	pub response: Vec<Route>,
 }
 
 impl Rsp {
@@ -38,7 +38,7 @@ impl<'a, 'r> FromRequest<'a, 'r> for Rsp {
 				Ok(s) => Outcome::Success(s),
 				Err(e) => Outcome::Failure((Status::InternalServerError, e)),
 			},
-			None => Outcome::Success(Rsp { response: None }),
+			None => Outcome::Success(Rsp { response: vec![] }),
 		}
 	}
 }

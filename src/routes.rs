@@ -13,13 +13,20 @@ pub fn index() -> File {
 }
 
 #[get("/<path..>")]
-pub fn path(path: PathBuf, rsp: Rsp) -> Option<File> {
-	if let Some(s) = rsp.response {
-		for i in s.into_iter() {
-			if path == Path::new(&i.uri) {
-				let p = Path::new(WWW).join(i.file);
-				return File::open(p).ok();
-			}
+pub fn path(path: PathBuf, rsp: Result<Rsp>) -> Option<File> {
+	// FIXME
+	let rsp = match rsp {
+		Ok(s) => s,
+		Err(e) => {
+			eprintln!("{:?}", e);
+			return None;
+		}
+	};
+
+	for i in rsp.response.into_iter() {
+		if path == Path::new(&i.uri) {
+			let p = Path::new(WWW).join(i.file);
+			return File::open(p).ok();
 		}
 	}
 	let p = Path::new(WWW).join(path);
