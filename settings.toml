@@ -6,7 +6,7 @@ skeleton = "skeleton.html"
 # the repo settings
 [git]
 # url of the repo
-url = "https://github.com/Dawidkubis/python-gjk.git"
+url = "<your git repository url>"
 # branch of the repo
 branch = "master"
 
