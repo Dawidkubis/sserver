@@ -58,8 +58,6 @@ pub struct Settings {
 	pub index: String,
 	/// name of skeleton file
 	pub skeleton: String,
-	/// should all the files be served?
-	pub serve_all: bool,
 	/// list of responses
 	pub response: Option<String>,
 	/// git

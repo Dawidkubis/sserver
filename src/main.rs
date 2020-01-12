@@ -6,10 +6,7 @@ extern crate rocket;
 extern crate anyhow;
 #[macro_use]
 extern crate lazy_static;
-//#[macro_use]
-//extern crate thiserror;
 extern crate comrak;
-extern crate reqwest;
 extern crate serde;
 extern crate structopt;
 extern crate toml;

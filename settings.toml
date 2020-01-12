@@ -2,8 +2,6 @@
 index = "README.md"
 # skeleton for markdown
 skeleton = "skeleton.html"
-# shall all the repo's files be served with their paths?
-serve_all = true
 
 # the repo settings
 [git]

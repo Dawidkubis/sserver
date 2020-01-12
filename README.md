@@ -39,7 +39,6 @@ As of now Sserver serves all the files in the repository.
 Configuration is done in the `settings.toml` file.
 + `index` - corresponds to what you get when you GET your site's url
 + `skeleton` - a skeleton html file, required for markdown generation
-+ `serve_all` - does nothing... yet
 ### git
 + `url` - url of your git repo
 + `branch` - the branch that should be used
