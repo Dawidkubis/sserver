@@ -70,10 +70,6 @@ impl Settings {
 		let s = &read_to_string(SETTINGS_PATH)?;
 		let s = toml::from_str::<Self>(&s)?;
 
-		// handle exceptions
-		// - responses file doesnt exist (if specified)
-		// or is invalid
-
 		if Path::new(WWW).is_dir() {
 			remove_dir_all(WWW)?;
 		}
