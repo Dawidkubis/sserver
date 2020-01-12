@@ -2,11 +2,12 @@
 index = "README.md"
 # skeleton for markdown
 skeleton = "skeleton.html"
+response = "responses.toml"
 
 # the repo settings
 [git]
 # url of the repo
-url = "https://github.com/Dawidkubis/python-gjk.git"
+url = "https://github.com/Dawidkubis/test.git"
 # branch of the repo
 branch = "master"
 
