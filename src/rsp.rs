@@ -1,12 +1,12 @@
-use serde::Deserialize;
-use rocket::request::{FromRequest, self};
-use rocket::Request;
+use crate::SETTINGS;
+use anyhow::{Error, Result};
 use rocket::http::Status;
 use rocket::request::Outcome;
-use anyhow::{Error, Result};
-use std::path::Path;
+use rocket::request::{self, FromRequest};
+use rocket::Request;
+use serde::Deserialize;
 use std::fs::read_to_string;
-use crate::SETTINGS;
+use std::path::Path;
 
 #[derive(Debug, Deserialize)]
 pub struct Route {
@@ -16,13 +16,13 @@ pub struct Route {
 
 #[derive(Debug, Deserialize)]
 pub struct Rsp {
-	pub response: Vec<Route>
+	pub response: Vec<Route>,
 }
 
 impl Rsp {
 	fn get<S>(path: S) -> Result<Self>
 	where
-		S: AsRef<Path>
+		S: AsRef<Path>,
 	{
 		let s = &read_to_string(path)?;
 		Ok(toml::from_str::<Self>(s)?)
@@ -31,15 +31,15 @@ impl Rsp {
 
 // FUCK FUCK FUCK this isnt working at all
 impl<'a, 'r> FromRequest<'a, 'r> for Option<Rsp> {
-    type Error = Error;
+	type Error = Error;
 
-    fn from_request(request: &'a Request<'r>) -> request::Outcome<Option<Self>, Self::Error> {
-    	match SETTINGS.response {
-    		Some(s) => match Rsp::get(s) {
-    			Ok(s) => Outcome::Success(s),
-    			Err(e) => Outcome::Failure((Status::new(500), e))
-    		}
-    		None => Outcome::Success(None),
-    	}
-    }
+	fn from_request(request: &'a Request<'r>) -> request::Outcome<Option<Self>, Self::Error> {
+		match SETTINGS.response {
+			Some(s) => match Rsp::get(s) {
+				Ok(s) => Outcome::Success(s),
+				Err(e) => Outcome::Failure((Status::new(500), e)),
+			},
+			None => Outcome::Success(None),
+		}
+	}
 }
