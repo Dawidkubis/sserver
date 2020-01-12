@@ -33,22 +33,18 @@ Edit the `settings.toml` file to make sure Sserver clones your repo with the rig
 Run Sserver.
 
 To edit your site just edit your repository and your changes will be pulled by Sserver.
-As of now Sserver serves all the files in the repository.
+A additional settings file can be added to your repository to further specify the routes.
 
 ## Configuration
 Configuration is done in the `settings.toml` file.
 + `index` - corresponds to what you get when you GET your site's url
 + `skeleton` - a skeleton html file, required for markdown generation
++ `response` - optional, a file describing additional settings; note that this implies that a route must be set or your file won't be served (not yet implemented)
 ### git
 + `url` - url of your git repo
 + `branch` - the branch that should be used
-### adding custom responses (not yet)
-To add a custom response add the following to the `settings.toml` file:
-```
-[[response]]
-uri = "/uri/to/respond/to"
-file = "/path/to/response/file"
-```
+### response format
+... not yet
 
 ## Supported file types
 Sserver is able to serve any of the following file types:
