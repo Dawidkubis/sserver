@@ -1,4 +1,4 @@
-use crate::SETTINGS;
+use crate::{SETTINGS, WWW};
 use anyhow::{Error, Result};
 use rocket::http::Status;
 use rocket::request::Outcome;
@@ -16,7 +16,7 @@ pub struct Route {
 
 #[derive(Debug, Deserialize)]
 pub struct Rsp {
-	pub response: Vec<Route>,
+	pub response: Option<Vec<Route>>,
 }
 
 impl Rsp {
@@ -29,17 +29,16 @@ impl Rsp {
 	}
 }
 
-// FUCK FUCK FUCK this isnt working at all
-impl<'a, 'r> FromRequest<'a, 'r> for Option<Rsp> {
+impl<'a, 'r> FromRequest<'a, 'r> for Rsp {
 	type Error = Error;
 
-	fn from_request(request: &'a Request<'r>) -> request::Outcome<Option<Self>, Self::Error> {
-		match SETTINGS.response {
-			Some(s) => match Rsp::get(s) {
+	fn from_request(_request: &'a Request<'r>) -> request::Outcome<Self, Self::Error> {
+		match &SETTINGS.response {
+			Some(s) => match Rsp::get(Path::new(WWW).join(s)) {
 				Ok(s) => Outcome::Success(s),
-				Err(e) => Outcome::Failure((Status::new(500), e)),
+				Err(e) => Outcome::Failure((Status::InternalServerError, e)),
 			},
-			None => Outcome::Success(None),
+			None => Outcome::Success(Rsp { response: None }),
 		}
 	}
 }
