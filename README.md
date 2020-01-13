@@ -44,12 +44,18 @@ A additional settings file can be added to your repository to further specify th
 Configuration is done in the `settings.toml` file.
 + `index` - corresponds to what you get when you GET your site's url
 + `skeleton` - a skeleton html file, required for markdown generation
-+ `response` - optional, a file describing additional settings; note that this implies that a route must be set or your file won't be served (not yet implemented)
++ `response` - optional, a file describing additional settings; note that this implies that a route must be set or your file won't be served.
 ### git
 + `url` - url of your git repo
 + `branch` - the branch that should be used
 ### response format
-... not yet
+```toml
+[[response]]
+uri = "readme"
+file = "README.md"
+```
+This will respond with the `README.md` to `GET` to `readme`.
+Note that `readme` != `/readme` since `/` implies root.
 
 ## Supported file types
 Sserver is able to serve any of the following file types:
