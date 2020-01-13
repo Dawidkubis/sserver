@@ -64,6 +64,7 @@ Sserver is able to serve any of the following file types:
 + css
 + jpg, png, ico
 + raw text
++ any executable file - stdout is returned as html
 
 ## Ports
 Run with `-p <port_number>` to run Sserver on specific port (8000 is the default).

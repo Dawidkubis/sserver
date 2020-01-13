@@ -4,8 +4,10 @@ use rocket::request::Request;
 use rocket::response::{self, content, NamedFile, Responder};
 use std::ffi::OsStr;
 use std::fmt::Debug;
-use std::fs::read_to_string;
+use std::process::Command;
+use std::fs::{read_to_string, metadata};
 use std::path::{Path, PathBuf};
+use std::os::unix::fs::PermissionsExt;
 
 pub enum File {
 	Html(content::Html<String>),
@@ -13,6 +15,15 @@ pub enum File {
 }
 
 impl File {
+	
+	fn html(s: String) -> Result<Self> {
+		Ok(Self::Html(content::Html(s)))
+	}
+
+	fn file(p: impl AsRef<Path>) -> Result<Self> {
+		Ok(Self::File(NamedFile::open(p)?))
+	}
+
 	pub fn open<P>(path: P) -> Result<File>
 	where
 		P: AsRef<OsStr> + AsRef<Path> + Debug,
@@ -20,6 +31,9 @@ impl File {
 		let p = Path::new(&path);
 
 		// TODO executable checking
+		if is_exec(&p) {
+			return Self::html(source(&p)?)
+		}
 
 		// extensions
 		match p.extension() {
@@ -27,8 +41,8 @@ impl File {
 				.to_str()
 				.ok_or(anyhow!("cannot convert filename to utf-8"))?
 			{
-				"md" => Ok(Self::Html(content::Html(md(&read_to_string(path)?)?))),
-				_ => Ok(Self::File(NamedFile::open(path)?)),
+				"md" => Self::html(md(&read_to_string(path)?)?),
+				_ => Self::file(path),
 			},
 			None => Err(anyhow!("path {:?} has no extension", path)),
 		}
@@ -56,4 +70,18 @@ pub fn md(body: &str) -> Result<String> {
 	let skeleton: String = read_to_string([WWW, &SETTINGS.skeleton].iter().collect::<PathBuf>())?;
 
 	Ok(skeleton.replace("{}", &markdown!(body)))
+}
+
+fn is_exec(path: impl AsRef<Path>) -> bool {
+	match metadata(path) {
+		Ok(s) => s.permissions().mode() & 0o111 != 0,
+		Err(_) => false,
+	}
+}
+
+fn source(path: &Path) -> Result<String> {
+	let r = Command::new(path)
+		.output()?
+		.stdout;
+	Ok(String::from_utf8(r)?)
 }
