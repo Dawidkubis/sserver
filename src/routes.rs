@@ -15,7 +15,7 @@ pub fn index() -> File {
 #[get("/<path..>")]
 pub fn path(path: PathBuf, rsp: Result<Rsp>) -> Option<File> {
 	// FIXME
-	
+
 	let rsp = match rsp {
 		Ok(s) => s,
 		Err(e) => {
@@ -35,7 +35,7 @@ pub fn path(path: PathBuf, rsp: Result<Rsp>) -> Option<File> {
 
 	if SETTINGS.serve_all {
 		let p = Path::new(WWW).join(path);
-		return File::open(p).ok()
+		return File::open(p).ok();
 	}
 
 	None
