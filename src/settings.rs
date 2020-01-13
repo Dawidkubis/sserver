@@ -60,6 +60,8 @@ pub struct Settings {
 	pub skeleton: String,
 	/// list of responses
 	pub response: Option<String>,
+	/// shall all the repo's files be served
+	pub serve_all: bool,
 	/// git
 	pub git: Git,
 }
@@ -70,9 +72,7 @@ impl Settings {
 		let s = &read_to_string(SETTINGS_PATH)?;
 		let s = toml::from_str::<Self>(&s)?;
 
-		// handle exceptions
-		// - responses file doesnt exist (if specified)
-		// or is invalid
+		// TODO a functional way to deal with the following?
 
 		if Path::new(WWW).is_dir() {
 			remove_dir_all(WWW)?;

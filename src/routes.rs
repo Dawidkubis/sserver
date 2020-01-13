@@ -1,5 +1,7 @@
 use crate::response::File;
+use crate::rsp::Rsp;
 use crate::{path, SETTINGS, WWW};
+use anyhow::Result;
 use rocket::Request;
 use std::path::{Path, PathBuf};
 
@@ -11,9 +13,32 @@ pub fn index() -> File {
 }
 
 #[get("/<path..>")]
-pub fn path(path: PathBuf) -> Option<File> {
-	let p = Path::new(WWW).join(path);
-	File::open(p).ok()
+pub fn path(path: PathBuf, rsp: Result<Rsp>) -> Option<File> {
+	// FIXME
+
+	let rsp = match rsp {
+		Ok(s) => s,
+		Err(e) => {
+			eprintln!("{:?}", e);
+			return None;
+		}
+	};
+
+	if let Some(s) = rsp.response {
+		for i in s.into_iter() {
+			if path == Path::new(&i.uri) {
+				let p = Path::new(WWW).join(i.file);
+				return File::open(p).ok();
+			}
+		}
+	}
+
+	if SETTINGS.serve_all {
+		let p = Path::new(WWW).join(path);
+		return File::open(p).ok();
+	}
+
+	None
 }
 
 // Catchers

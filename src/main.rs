@@ -17,7 +17,7 @@ mod response;
 mod settings;
 mod cli;
 mod routes;
-//mod rsp;
+mod rsp;
 
 use cli::Cli;
 use settings::Settings;

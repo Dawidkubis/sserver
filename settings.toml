@@ -2,6 +2,10 @@
 index = "README.md"
 # skeleton for markdown
 skeleton = "skeleton.html"
+# ad-hoc settings
+response = "responses.toml"
+# serve all the files?
+serve_all = true
 
 # the repo settings
 [git]
