@@ -4,10 +4,10 @@ use rocket::request::Request;
 use rocket::response::{self, content, NamedFile, Responder};
 use std::ffi::OsStr;
 use std::fmt::Debug;
-use std::process::Command;
-use std::fs::{read_to_string, metadata};
-use std::path::{Path, PathBuf};
+use std::fs::{metadata, read_to_string};
 use std::os::unix::fs::PermissionsExt;
+use std::path::{Path, PathBuf};
+use std::process::Command;
 
 pub enum File {
 	Html(content::Html<String>),
@@ -15,7 +15,6 @@ pub enum File {
 }
 
 impl File {
-	
 	fn html(s: String) -> Result<Self> {
 		Ok(Self::Html(content::Html(s)))
 	}
@@ -32,7 +31,7 @@ impl File {
 
 		// TODO executable checking
 		if is_exec(&p) {
-			return Self::html(source(&p)?)
+			return Self::html(source(&p)?);
 		}
 
 		// extensions
@@ -80,8 +79,6 @@ fn is_exec(path: impl AsRef<Path>) -> bool {
 }
 
 fn source(path: &Path) -> Result<String> {
-	let r = Command::new(path)
-		.output()?
-		.stdout;
+	let r = Command::new(path).output()?.stdout;
 	Ok(String::from_utf8(r)?)
 }
