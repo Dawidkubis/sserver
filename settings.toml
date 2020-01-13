@@ -10,7 +10,7 @@ serve_all = true
 # the repo settings
 [git]
 # url of the repo
-url = "<your git repository url>"
+url = "https://github.com/Dawidkubis/test.git"
 # branch of the repo
 branch = "master"
 

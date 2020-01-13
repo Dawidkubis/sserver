@@ -17,7 +17,12 @@ impl File {
 	where
 		P: AsRef<OsStr> + AsRef<Path> + Debug,
 	{
-		match Path::new(&path).extension() {
+		let p = Path::new(&path);
+
+		// TODO executable checking
+
+		// extensions
+		match p.extension() {
 			Some(s) => match s
 				.to_str()
 				.ok_or(anyhow!("cannot convert filename to utf-8"))?
