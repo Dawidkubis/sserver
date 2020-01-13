@@ -1,5 +1,10 @@
 # Sserver
 
+## To Do
++ script support - definitely
++ authorization - possibly
++ databases - possibly
+
 ## Dependencies
 + `git`
 + [`rust`](https://www.rust-lang.org/tools/install) - nightly version
