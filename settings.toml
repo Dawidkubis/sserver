@@ -3,7 +3,7 @@ index = "README.md"
 # skeleton for markdown
 skeleton = "skeleton.html"
 # ad-hoc settings
-response = "responses.toml"
+responses = "responses.toml"
 # serve all the files?
 serve_all = true
 

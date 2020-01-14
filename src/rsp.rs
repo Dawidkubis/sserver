@@ -9,14 +9,14 @@ use std::fs::read_to_string;
 use std::path::Path;
 
 #[derive(Debug, Deserialize)]
-pub struct Route {
+pub struct Get {
 	pub uri: String,
 	pub file: String,
 }
 
 #[derive(Debug, Deserialize)]
 pub struct Rsp {
-	pub get: Option<Vec<Route>>,
+	pub get: Option<Vec<Get>>,
 }
 
 impl Rsp {
