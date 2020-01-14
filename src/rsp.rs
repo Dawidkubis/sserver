@@ -16,7 +16,7 @@ pub struct Route {
 
 #[derive(Debug, Deserialize)]
 pub struct Rsp {
-	pub response: Option<Vec<Route>>,
+	pub get: Option<Vec<Route>>,
 }
 
 impl Rsp {
@@ -33,12 +33,12 @@ impl<'a, 'r> FromRequest<'a, 'r> for Rsp {
 	type Error = Error;
 
 	fn from_request(_request: &'a Request<'r>) -> request::Outcome<Self, Self::Error> {
-		match &SETTINGS.response {
+		match &SETTINGS.responses {
 			Some(s) => match Rsp::get(Path::new(WWW).join(s)) {
 				Ok(s) => Outcome::Success(s),
 				Err(e) => Outcome::Failure((Status::InternalServerError, e)),
 			},
-			None => Outcome::Success(Rsp { response: None }),
+			None => Outcome::Success(Rsp { get: None }),
 		}
 	}
 }

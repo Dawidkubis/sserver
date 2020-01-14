@@ -24,7 +24,7 @@ pub fn path(path: PathBuf, rsp: Result<Rsp>) -> Option<File> {
 		}
 	};
 
-	if let Some(s) = rsp.response {
+	if let Some(s) = rsp.get {
 		for i in s.into_iter() {
 			if path == Path::new(&i.uri) {
 				let p = Path::new(WWW).join(i.file);
