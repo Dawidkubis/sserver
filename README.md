@@ -1,9 +1,12 @@
 # Sserver
 
 ## To Do
-+ script support - definitely
 + authorization - possibly
 + databases - possibly
++ doc comments
++ code cleanup
++ give more explicit information to the user - debugging purposes
++ support more http methods
 
 ## Dependencies
 + `git`
@@ -50,7 +53,7 @@ Configuration is done in the `settings.toml` file.
 + `branch` - the branch that should be used
 ### response format
 ```toml
-[[response]]
+[[get]]
 uri = "readme"
 file = "README.md"
 ```
