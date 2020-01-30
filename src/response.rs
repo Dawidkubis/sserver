@@ -10,13 +10,13 @@ use std::path::{Path, PathBuf};
 use std::process::Command;
 
 pub enum File {
-	Html(content::Html<String>),
+	Html(String),
 	File(NamedFile),
 }
 
 impl File {
 	fn html(s: String) -> Result<Self> {
-		Ok(Self::Html(content::Html(s)))
+		Ok(Self::Html(s))
 	}
 
 	fn file(p: impl AsRef<Path>) -> Result<Self> {
@@ -51,7 +51,7 @@ impl File {
 impl<'r> Responder<'r> for File {
 	fn respond_to(self, r: &Request) -> response::Result<'r> {
 		match self {
-			Self::Html(c) => c.respond_to(r),
+			Self::Html(c) => content::Html(c).respond_to(r),
 			Self::File(c) => c.respond_to(r),
 		}
 	}
