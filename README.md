@@ -1,13 +1,13 @@
 # Sserver
 
 ## To Do
-+ authorization - possibly
-+ doc comments
 + code cleanup
 + give more explicit information to the user - debugging purposes
 + remove `settings.toml`
 + more templates
++ doc comments
 + support more http methods
++ authorization - possibly
 
 ## Dependencies
 + `git`

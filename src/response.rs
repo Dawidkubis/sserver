@@ -1,5 +1,5 @@
 use crate::{SETTINGS, WWW};
-use anyhow::Result;
+use anyhow::{anyhow, Result};
 use rocket::request::Request;
 use rocket::response::{self, content, NamedFile, Responder};
 use std::ffi::OsStr;

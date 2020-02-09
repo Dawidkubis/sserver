@@ -1,17 +1,6 @@
 #![feature(proc_macro_hygiene, decl_macro)]
 
 #[macro_use]
-extern crate rocket;
-#[macro_use]
-extern crate anyhow;
-#[macro_use]
-extern crate lazy_static;
-extern crate comrak;
-extern crate serde;
-extern crate structopt;
-extern crate toml;
-
-#[macro_use]
 mod response;
 #[macro_use]
 mod settings;
@@ -21,7 +10,11 @@ mod rsp;
 
 use cli::Cli;
 use settings::Settings;
+
 use std::{env, thread, time};
+
+use lazy_static::lazy_static;
+use rocket::{catchers, routes};
 use structopt::StructOpt;
 
 pub const SETTINGS_PATH: &str = "settings.toml";

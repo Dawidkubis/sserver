@@ -1,5 +1,5 @@
 use crate::{SETTINGS_PATH, WWW};
-use anyhow::{Context, Result};
+use anyhow::{anyhow, Context, Result};
 use serde::Deserialize;
 use std::fs::{read_to_string, remove_dir_all};
 use std::path::{Path, PathBuf};

@@ -2,7 +2,7 @@ use crate::response::File;
 use crate::rsp::Rsp;
 use crate::{path, SETTINGS, WWW};
 use anyhow::Result;
-use rocket::Request;
+use rocket::{catch, get, Request};
 use std::path::{Path, PathBuf};
 
 /// Index
