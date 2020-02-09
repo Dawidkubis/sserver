@@ -14,8 +14,6 @@ pub fn index() -> File {
 
 #[get("/<path..>")]
 pub fn path(path: PathBuf, rsp: Result<Rsp>) -> Option<File> {
-	// FIXME
-
 	let rsp = match rsp {
 		Ok(s) => s,
 		Err(e) => {
@@ -40,9 +38,6 @@ pub fn path(path: PathBuf, rsp: Result<Rsp>) -> Option<File> {
 
 	None
 }
-
-// Catchers
-// TODO
 
 #[catch(404)]
 pub fn not_found(req: &Request) -> String {

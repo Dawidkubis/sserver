@@ -2,10 +2,11 @@
 
 ## To Do
 + authorization - possibly
-+ databases - possibly
 + doc comments
 + code cleanup
 + give more explicit information to the user - debugging purposes
++ remove `settings.toml`
++ more templates
 + support more http methods
 
 ## Dependencies

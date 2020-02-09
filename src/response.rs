@@ -29,7 +29,6 @@ impl File {
 	{
 		let p = Path::new(&path);
 
-		// TODO executable checking
 		if is_exec(&p) {
 			return Self::html(source(&p)?);
 		}
