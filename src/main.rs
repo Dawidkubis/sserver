@@ -2,8 +2,6 @@
 
 #[macro_use]
 mod response;
-#[macro_use]
-mod settings;
 mod cli;
 mod routes;
 mod rsp;
@@ -13,26 +11,16 @@ use settings::Settings;
 
 use std::{env, thread, time};
 
-use lazy_static::lazy_static;
 use rocket::{catchers, routes};
 use structopt::StructOpt;
+use git2::Repository;
 
 pub const SETTINGS_PATH: &str = "settings.toml";
 pub const WWW: &str = "www";
 
-lazy_static! {
-	pub static ref SETTINGS: Settings = match Settings::get() {
-		Ok(s) => s,
-		Err(e) => panic!("Unable to parse {} : {}", SETTINGS_PATH, e),
-	};
-}
-
 fn main() {
 	// get cmd args
 	let opt = Cli::from_args();
-
-	// check settings
-	&*SETTINGS;
 
 	// port setting
 	if let Some(i) = opt.port {
@@ -42,8 +30,8 @@ fn main() {
 	// git repo update
 	thread::spawn(|| loop {
 		thread::sleep(time::Duration::from_secs(60));
-		match SETTINGS.git.update() {
-			Ok(s) => println!("git repo update: status = {}", s.status),
+		match Repository::clone(&opt.git, "www") {
+			Ok(s) => println!("git repo updated"),
 			Err(e) => eprintln!("{:?}", e),
 		}
 	});

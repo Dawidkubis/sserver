@@ -1,4 +1,4 @@
-use crate::{SETTINGS, WWW};
+use crate::WWW;
 use anyhow::{anyhow, Result};
 use rocket::request::Request;
 use rocket::response::{self, content, NamedFile, Responder};

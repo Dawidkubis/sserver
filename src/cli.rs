@@ -6,4 +6,7 @@ pub struct Cli {
 	/// port
 	#[structopt(short, long)]
 	pub port: Option<u16>,
+
+	/// git repo
+	pub git: String,
 }
