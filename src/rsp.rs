@@ -18,6 +18,7 @@ pub struct Get {
 
 #[derive(Debug, Deserialize)]
 pub struct Rsp {
+	pub index: String,
 	pub get: Option<Vec<Get>>,
 }
 
