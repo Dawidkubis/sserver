@@ -7,24 +7,21 @@ mod routes;
 mod rsp;
 
 use cli::Cli;
-use settings::Settings;
 
 use std::{env, thread, time};
 use std::process::Command;
 
 use rocket::{catchers, routes};
 use structopt::StructOpt;
+use lazy_static::lazy_static;
 
-pub const SETTINGS: &str = "settings.toml";
+lazy_static! {
+	pub static ref OPT: Cli = Cli::from_args();
+}
 
 fn main() {
-	// get cmd args
-	let opt = Cli::from_args();
-
 	// port setting
-	if let Some(i) = opt.port {
-		env::set_var("ROCKET_PORT", format!("{}", i));
-	}
+	env::set_var("ROCKET_PORT", format!("{}", OPT.port));
 
 	// git repo update
 	thread::spawn(|| loop {

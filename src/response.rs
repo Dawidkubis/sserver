@@ -1,13 +1,15 @@
-use crate::WWW;
-use anyhow::{anyhow, Result};
-use rocket::request::Request;
-use rocket::response::{self, content, NamedFile, Responder};
+use crate::OPT;
+
 use std::ffi::OsStr;
 use std::fmt::Debug;
 use std::fs::{metadata, read_to_string};
 use std::os::unix::fs::PermissionsExt;
-use std::path::{Path, PathBuf};
+use std::path::Path;
 use std::process::Command;
+
+use anyhow::{anyhow, Result};
+use rocket::request::Request;
+use rocket::response::{self, content, NamedFile, Responder};
 
 pub enum File {
 	Html(String),
@@ -67,13 +69,13 @@ macro_rules! markdown {
 			ext_tasklist: true,
 			ext_superscript: true,
 			..ComrakOptions::default()
-		}
+		};
 		markdown_to_html($e, &options)
 		}};
 }
 
 pub fn md(body: &str) -> Result<String> {
-	let skeleton: String = read_to_string([WWW, &SETTINGS.skeleton].iter().collect::<PathBuf>())?;
+	let skeleton: String = read_to_string(&OPT.skel)?;
 
 	Ok(skeleton.replace("{}", &markdown!(body)))
 }

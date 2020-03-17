@@ -1,12 +1,13 @@
-use crate::SETTINGS;
+
+use std::fs::read_to_string;
+use std::path::Path;
+
 use anyhow::{Error, Result};
 use rocket::http::Status;
 use rocket::request::Outcome;
 use rocket::request::{self, FromRequest};
 use rocket::Request;
 use serde::Deserialize;
-use std::fs::read_to_string;
-use std::path::Path;
 
 #[derive(Debug, Deserialize)]
 pub struct Get {

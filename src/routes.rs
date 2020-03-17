@@ -1,6 +1,5 @@
 use crate::response::File;
 use crate::rsp::Rsp;
-use crate::WWW;
 use anyhow::Result;
 use rocket::{catch, get, Request};
 use std::path::{Path, PathBuf};
