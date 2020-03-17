@@ -14,8 +14,8 @@ pub fn index(rsp: Rsp) -> Option<File> {
 pub fn path(path: PathBuf, rsp: Rsp) -> Option<File> {
 	if let Some(s) = rsp.get {
 		for i in s.into_iter() {
-			if path == Path::new(&i.uri) {
-				File::open(i.file).ok();
+			if path.as_path() == Path::new(&i.uri) {
+				return File::open(i.file).ok();
 			}
 		}
 	}
