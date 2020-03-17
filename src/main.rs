@@ -27,7 +27,7 @@ fn main() {
 	thread::spawn(|| loop {
 		thread::sleep(time::Duration::from_secs(1));
 		match Command::new("git").arg("pull").output() {
-			Ok(s) => println!("git repo updated"),
+			Ok(s) => println!("{:?}", s),
 			Err(e) => eprintln!("{:?}", e),
 		}
 	});
