@@ -625,7 +625,7 @@ checksum = "44e59e0c9fa00817912ae6e4e6e3c4fe04455e75699d06eedc7d85917ed8e8f4"
 
 [[package]]
 name = "sserver"
-version = "0.1.0"
+version = "1.0.0"
 dependencies = [
  "anyhow",
  "comrak",

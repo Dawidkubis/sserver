@@ -1,7 +1,11 @@
 [package]
 name = "sserver"
-version = "0.1.0"
-authors = ["Dawid J. Kubis <dawid.kubis3@gmail.com>"]
+version = "1.0.0"
+authors = ["Dawid J. Kubis <dawidkubis@hitler.rocks>"]
+repository = "https://github.com/Dawidkubis/sserver"
+license = "MIT"
+description = "serve your repositories as webpages"
+readme = "README.md"
 edition = "2018"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
