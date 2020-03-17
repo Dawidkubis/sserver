@@ -1,4 +1,4 @@
-use crate::{SETTINGS, WWW};
+use crate::SETTINGS;
 use anyhow::{Error, Result};
 use rocket::http::Status;
 use rocket::request::Outcome;
@@ -34,7 +34,7 @@ impl<'a, 'r> FromRequest<'a, 'r> for Rsp {
 
 	fn from_request(_request: &'a Request<'r>) -> request::Outcome<Self, Self::Error> {
 		match &SETTINGS.responses {
-			Some(s) => match Rsp::get(Path::new(WWW).join(s)) {
+			Some(s) => match Rsp::get(SETTINGS) {
 				Ok(s) => Outcome::Success(s),
 				Err(e) => Outcome::Failure((Status::InternalServerError, e)),
 			},

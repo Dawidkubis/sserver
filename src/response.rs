@@ -60,7 +60,15 @@ impl<'r> Responder<'r> for File {
 macro_rules! markdown {
 	($e:expr) => {{
 		use comrak::{markdown_to_html, ComrakOptions};
-		markdown_to_html($e, &ComrakOptions::default())
+		let options = ComrakOptions {
+			unsafe_: true,
+			ext_table: true,
+			ext_strikethrough: true,
+			ext_tasklist: true,
+			ext_superscript: true,
+			..ComrakOptions::default()
+		}
+		markdown_to_html($e, &options)
 		}};
 }
 

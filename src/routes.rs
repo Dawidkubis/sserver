@@ -5,13 +5,6 @@ use anyhow::Result;
 use rocket::{catch, get, Request};
 use std::path::{Path, PathBuf};
 
-/// Index
-#[get("/")]
-pub fn index() -> File {
-	let path = path!(&SETTINGS.index);
-	File::open(path).unwrap()
-}
-
 #[get("/<path..>")]
 pub fn path(path: PathBuf, rsp: Result<Rsp>) -> Option<File> {
 	let rsp = match rsp {

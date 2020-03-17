@@ -10,13 +10,12 @@ use cli::Cli;
 use settings::Settings;
 
 use std::{env, thread, time};
+use std::process::Command;
 
 use rocket::{catchers, routes};
 use structopt::StructOpt;
-use git2::Repository;
 
-pub const SETTINGS_PATH: &str = "settings.toml";
-pub const WWW: &str = "www";
+pub const SETTINGS: &str = "settings.toml";
 
 fn main() {
 	// get cmd args
@@ -29,8 +28,8 @@ fn main() {
 
 	// git repo update
 	thread::spawn(|| loop {
-		thread::sleep(time::Duration::from_secs(60));
-		match Repository::clone(&opt.git, "www") {
+		thread::sleep(time::Duration::from_secs(1));
+		match Command::new("git").arg("pull").output() {
 			Ok(s) => println!("git repo updated"),
 			Err(e) => eprintln!("{:?}", e),
 		}
@@ -38,7 +37,7 @@ fn main() {
 
 	// rocket server init
 	rocket::ignite()
-		.mount("/", routes![routes::index, routes::path,])
+		.mount("/", routes![routes::path,])
 		.register(catchers![routes::not_found,])
 		.launch();
 }
