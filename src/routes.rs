@@ -17,18 +17,12 @@ pub fn path(path: PathBuf, rsp: Result<Rsp>) -> Option<File> {
 	if let Some(s) = rsp.get {
 		for i in s.into_iter() {
 			if path == Path::new(&i.uri) {
-				let p = Path::new(WWW).join(i.file);
-				return File::open(p).ok();
+				File::open(i.file).ok();
 			}
 		}
 	}
 
-	if SETTINGS.serve_all {
-		let p = Path::new(WWW).join(path);
-		return File::open(p).ok();
-	}
-
-	None
+	File::open(path).ok()
 }
 
 #[catch(404)]
