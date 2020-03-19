@@ -8,12 +8,12 @@ mod rsp;
 
 use cli::Cli;
 
-use std::{env, thread, time};
 use std::process::Command;
+use std::{env, thread, time};
 
+use lazy_static::lazy_static;
 use rocket::{catchers, routes};
 use structopt::StructOpt;
-use lazy_static::lazy_static;
 
 lazy_static! {
 	pub static ref OPT: Cli = Cli::from_args();

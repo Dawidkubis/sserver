@@ -69,7 +69,7 @@ macro_rules! markdown {
 			ext_tasklist: true,
 			ext_superscript: true,
 			..ComrakOptions::default()
-		};
+			};
 		markdown_to_html($e, &options)
 		}};
 }
