@@ -16,11 +16,6 @@
 + `make` - not needed, but simplyfies the compilation
 
 ## Compilation
-### with `make`
-```shell
-make
-```
-### without `make`
 ```shell
 cargo build --release
 ```
