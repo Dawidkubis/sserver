@@ -1,6 +1,6 @@
 [package]
 name = "sserver"
-version = "1.0.1"
+version = "1.0.2"
 authors = ["Dawid J. Kubis <dawidkubis@hitler.rocks>"]
 repository = "https://github.com/Dawidkubis/sserver"
 license = "MIT"
@@ -12,9 +12,9 @@ edition = "2018"
 
 [dependencies]
 lazy_static = "1.4.0"
-rocket = "0.4.2"
-comrak = "0.6.2"
-structopt = "0.3.5"
-toml = "0.5.5"
-serde = {version="1.0.104", features=["derive"]}
-anyhow = "1.0.26"
+rocket = "0.4.4"
+comrak = "0.7.0"
+structopt = "0.3.14"
+toml = "0.5.6"
+serde = { version="1.0.110", features=["derive"] }
+anyhow = "1.0.31"
