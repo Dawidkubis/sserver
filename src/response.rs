@@ -39,7 +39,7 @@ impl File {
 		match p.extension() {
 			Some(s) => match s
 				.to_str()
-				.ok_or(anyhow!("cannot convert filename to utf-8"))?
+				.ok_or_else(|| anyhow!("cannot convert filename to utf-8"))?
 			{
 				"md" => Self::html(md(&read_to_string(path)?)?),
 				_ => Self::file(path),
