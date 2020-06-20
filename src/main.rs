@@ -13,7 +13,6 @@ use std::{
 	time,
 };
 
-use lazy_static::lazy_static;
 use rocket::{catchers, routes};
 use structopt::StructOpt;
 
@@ -28,13 +27,11 @@ pub struct Cla {
 	pub port: u16,
 }
 
-lazy_static! {
-	pub static ref CLA: Cla = Cla::from_args();
-}
-
 fn main() {
+	let cla = Cla::from_args();
+	
 	// port setting
-	env::set_var("ROCKET_PORT", format!("{}", OPT.port));
+	env::set_var("ROCKET_PORT", format!("{}", cla.port));
 
 	// keep_alive setting
 	env::set_var("ROCKET_KEEP_ALIVE", "0");
@@ -54,6 +51,7 @@ fn main() {
 
 	// rocket server init
 	rocket::ignite()
+		.manage(cla)
 		.mount("/", routes![routes::path, routes::index])
 		.launch();
 }

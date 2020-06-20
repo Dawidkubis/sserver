@@ -1,5 +1,3 @@
-use crate::CLA;
-
 use std::{fs::read_to_string, path::Path};
 
 use anyhow::Result;
@@ -29,16 +27,5 @@ impl Rsp {
 	{
 		let s = &read_to_string(path)?;
 		Ok(toml::from_str::<Self>(s)?)
-	}
-}
-
-impl<'a, 'r> FromRequest<'a, 'r> for Rsp {
-	type Error = Error;
-
-	fn from_request(_request: &'a Request<'r>) -> request::Outcome<Self, Self::Error> {
-		match Rsp::get(&OPT.settings) {
-			Ok(s) => Outcome::Success(s),
-			Err(e) => Outcome::Failure((Status::InternalServerError, e)),
-		}
 	}
 }

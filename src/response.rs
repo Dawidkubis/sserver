@@ -1,5 +1,3 @@
-use crate::CLA;
-
 use std::{
 	ffi::OsStr,
 	fmt::Debug,
@@ -9,7 +7,7 @@ use std::{
 	process::Command,
 };
 
-use anyhow::Result;
+use anyhow::{Result, Context, anyhow};
 use rocket::{
 	response::{self, content, NamedFile, Responder},
 	request::Request,
@@ -43,7 +41,7 @@ impl File {
 		match p.extension() {
 			Some(s) => match s
 				.to_str()
-				.ok_or(anyhow!("cannot convert filename to utf-8"))?
+				.context("failed to convert extension to str")?
 			{
 				"md" => Self::html(md(&read_to_string(path)?)?),
 				_ => Self::file(path),
@@ -78,8 +76,8 @@ macro_rules! markdown {
 		}};
 }
 
-pub fn md(body: &str) -> Result<String> {
-	let skeleton: String = read_to_string(&CLA.skel)?;
+pub fn md(body: &str, skel: &str) -> Result<String> {
+	let skeleton: String = read_to_string(skel)?;
 
 	Ok(skeleton.replace("{}", &markdown!(body)))
 }
