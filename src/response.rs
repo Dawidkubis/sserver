@@ -1,15 +1,19 @@
-use crate::OPT;
+use crate::CLA;
 
-use std::ffi::OsStr;
-use std::fmt::Debug;
-use std::fs::{metadata, read_to_string};
-use std::os::unix::fs::PermissionsExt;
-use std::path::Path;
-use std::process::Command;
+use std::{
+	ffi::OsStr,
+	fmt::Debug,
+	fs::{metadata, read_to_string},
+	os::unix::fs::PermissionsExt,
+	path::Path,
+	process::Command,
+};
 
-use anyhow::{anyhow, Result};
-use rocket::request::Request;
-use rocket::response::{self, content, NamedFile, Responder};
+use anyhow::Result;
+use rocket::{
+	response::{self, content, NamedFile, Responder},
+	request::Request,
+};
 
 pub enum File {
 	Html(String),
@@ -75,7 +79,7 @@ macro_rules! markdown {
 }
 
 pub fn md(body: &str) -> Result<String> {
-	let skeleton: String = read_to_string(&OPT.skel)?;
+	let skeleton: String = read_to_string(&CLA.skel)?;
 
 	Ok(skeleton.replace("{}", &markdown!(body)))
 }

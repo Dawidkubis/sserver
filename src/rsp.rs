@@ -1,13 +1,13 @@
-use crate::OPT;
+use crate::CLA;
 
-use std::fs::read_to_string;
-use std::path::Path;
+use std::{fs::read_to_string, path::Path};
 
-use anyhow::{Error, Result};
-use rocket::http::Status;
-use rocket::request::Outcome;
-use rocket::request::{self, FromRequest};
-use rocket::Request;
+use anyhow::Result;
+use rocket::{
+	http::Status,
+	request::{self, Outcome, FromRequest},
+	Request
+};
 use serde::Deserialize;
 
 #[derive(Debug, Deserialize)]

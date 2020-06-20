@@ -22,8 +22,3 @@ pub fn path(path: PathBuf, rsp: Rsp) -> Option<File> {
 
 	File::open(path).ok()
 }
-
-#[catch(404)]
-pub fn not_found(req: &Request) -> String {
-	format!("404: {} is not a valid path", req.uri())
-}
