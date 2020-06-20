@@ -27,7 +27,7 @@ impl File {
 		Ok(Self::File(NamedFile::open(p)?))
 	}
 
-	pub fn open<P>(path: P) -> Result<File>
+	pub fn open<P>(path: P, skel: P) -> Result<File>
 	where
 		P: AsRef<OsStr> + AsRef<Path> + Debug,
 	{
@@ -43,7 +43,7 @@ impl File {
 				.to_str()
 				.context("failed to convert extension to str")?
 			{
-				"md" => Self::html(md(&read_to_string(path)?)?),
+				"md" => Self::html(md(&read_to_string(path)?, skel)?),
 				_ => Self::file(path),
 			},
 			None => Err(anyhow!("path {:?} has no extension", path)),
@@ -76,7 +76,10 @@ macro_rules! markdown {
 		}};
 }
 
-pub fn md(body: &str, skel: &str) -> Result<String> {
+pub fn md<P>(body: &str, skel: P) -> Result<String> 
+	where
+		P: AsRef<OsStr> + AsRef<Path> + Debug,
+	{
 	let skeleton: String = read_to_string(skel)?;
 
 	Ok(skeleton.replace("{}", &markdown!(body)))

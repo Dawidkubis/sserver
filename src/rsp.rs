@@ -11,17 +11,18 @@ use serde::Deserialize;
 #[derive(Debug, Deserialize)]
 pub struct Get {
 	pub uri: String,
-	pub file: String,
+	pub file: PathBuf,
+	pub template: PathBuf,
 }
 
 #[derive(Debug, Deserialize)]
 pub struct Rsp {
-	pub index: String,
+	pub index: PathBuf,
 	pub get: Option<Vec<Get>>,
 }
 
 impl Rsp {
-	fn get<S>(path: S) -> Result<Self>
+	pub fn get<S>(path: S) -> Result<Self>
 	where
 		S: AsRef<Path>,
 	{
