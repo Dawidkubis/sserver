@@ -1,9 +1,7 @@
-#![feature(proc_macro_hygiene, decl_macro)]
-
-#[macro_use]
-mod response;
-mod routes;
-mod rsp;
+/* #[macro_use] */
+/* mod response; */
+/* mod routes; */
+/* mod rsp; */
 
 use std::{
 	process::Command,
@@ -13,8 +11,8 @@ use std::{
 	time,
 };
 
-use rocket::{catchers, routes};
 use structopt::StructOpt;
+use actix_web::{get, web, App, HttpServer, Responder};
 
 /// Command line arguments representation
 #[derive(StructOpt)]
@@ -27,14 +25,10 @@ pub struct Cla {
 	pub port: u16,
 }
 
-fn main() {
+#[actix_rt::main]
+async fn main() -> std::io::Result<()> {
+	// handle command line arguments
 	let cla = Cla::from_args();
-	
-	// port setting
-	env::set_var("ROCKET_PORT", format!("{}", cla.port));
-
-	// keep_alive setting
-	env::set_var("ROCKET_KEEP_ALIVE", "0");
 
 	// git repo update
 	thread::spawn(|| loop {
@@ -49,9 +43,16 @@ fn main() {
 		}
 	});
 
-	// rocket server init
-	rocket::ignite()
-		.manage(cla)
-		.mount("/", routes![routes::path, routes::index])
-		.launch();
+	// http server init
+	HttpServer::new(|| 
+		App::new()
+			.route("/{path}", web::get().to(index))
+			)
+        .bind(format!("127.0.0.1:{}", cla.port))?
+        .run()
+        .await
+}
+
+async fn index(path: web::Path<Option<PathBuf>>) -> impl Responder {
+	"hmm"
 }
