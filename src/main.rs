@@ -1,9 +1,6 @@
-#![feature(proc_macro_hygiene, decl_macro)]
-
-#[macro_use]
-mod response;
-mod routes;
-mod rsp;
+/* mod response; */
+/* mod routes; */
+/* mod rsp; */
 
 use std::{
 	process::Command,
@@ -13,8 +10,8 @@ use std::{
 	time,
 };
 
-use rocket::{catchers, routes};
 use structopt::StructOpt;
+use tiny_http::{Server, Response};
 
 /// Command line arguments representation
 #[derive(StructOpt)]
@@ -28,14 +25,9 @@ pub struct Cla {
 }
 
 fn main() {
+	// handle command line arguments
 	let cla = Cla::from_args();
 	
-	// port setting
-	env::set_var("ROCKET_PORT", format!("{}", cla.port));
-
-	// keep_alive setting
-	env::set_var("ROCKET_KEEP_ALIVE", "0");
-
 	// git repo update
 	thread::spawn(|| loop {
 		thread::sleep(time::Duration::from_secs(1));
@@ -49,9 +41,13 @@ fn main() {
 		}
 	});
 
-	// rocket server init
-	rocket::ignite()
-		.manage(cla)
-		.mount("/", routes![routes::path, routes::index])
-		.launch();
+	// initialize server
+	let server = Server::http(format!("0.0.0.0:{}", cla.port)).unwrap();
+
+	// handle requests
+	for request in server.incoming_requests() {
+		request.respond(Response::from_string("nigger"));
+	}
+	
 }
+
