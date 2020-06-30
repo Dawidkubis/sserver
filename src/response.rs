@@ -13,6 +13,8 @@ use rocket::{
 	request::Request,
 };
 
+// TODO could probably be
+// done with 
 pub enum File {
 	Html(String),
 	File(NamedFile),

@@ -2,19 +2,21 @@
 
 #[macro_use]
 mod response;
-mod routes;
-mod rsp;
+use response::File;
+mod settings;
+use settings::Settings;
 
 use std::{
 	process::Command,
-	path::PathBuf,
+	path::{PathBuf, Path},
 	env,
 	thread,
 	time,
 };
 
-use rocket::{catchers, routes};
+use rocket::{routes, get, State};
 use structopt::StructOpt;
+use anyhow::Result;
 
 /// Command line arguments representation
 #[derive(StructOpt)]
@@ -27,8 +29,30 @@ pub struct Cla {
 	pub port: u16,
 }
 
+/// index of the site
+#[get("/")]
+pub fn index(rsp: State<Settings>, cla: State<Cla>) -> Result<File> {
+
+	File::open(rsp.index)
+}
+
+/// any other path
+#[get("/<path..>")]
+pub fn path(rsp: State<Settings>, cla: State<Cla>, path: PathBuf) -> Result<File> {
+	if let Some(s) = rsp.get {
+		for i in s.into_iter() {
+			if path.as_path() == Path::new(&i.uri) {
+				return File::open(i.file);
+			}
+		}
+	}
+
+	File::open(path)
+}
+
 fn main() {
 	let cla = Cla::from_args();
+	let set = Settings::get(cla.settings)?;
 	
 	// port setting
 	env::set_var("ROCKET_PORT", format!("{}", cla.port));
@@ -52,6 +76,7 @@ fn main() {
 	// rocket server init
 	rocket::ignite()
 		.manage(cla)
-		.mount("/", routes![routes::path, routes::index])
+		.manage(set)
+		.mount("/", routes![path, index])
 		.launch();
 }
