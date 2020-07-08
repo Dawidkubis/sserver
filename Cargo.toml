@@ -17,3 +17,5 @@ structopt = "0.3.5"
 toml = "0.5.5"
 serde = { version="1.0.104", features=["derive"] }
 anyhow = "1.0.26"
+log = "0.4.8"
+simplelog = "0.8.0"

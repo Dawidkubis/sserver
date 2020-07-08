@@ -15,6 +15,8 @@ use structopt::StructOpt;
 use anyhow::Result;
 use tiny_http::{Server, Response, Method};
 
+// TODO logging
+
 /// Command line arguments representation
 #[derive(StructOpt)]
 pub struct Cla {
