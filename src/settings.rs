@@ -7,7 +7,7 @@ use serde::Deserialize;
 pub struct Get {
 	pub uri: String,
 	pub file: PathBuf,
-	pub template: PathBuf,
+	pub template: Option<PathBuf>,
 }
 
 #[derive(Debug, Clone, Deserialize)]

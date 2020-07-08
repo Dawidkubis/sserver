@@ -1,8 +1,5 @@
-#![feature(proc_macro_hygiene, decl_macro)]
-
-#[macro_use]
-mod response;
-use response::File;
+//mod response;
+//use response::File;
 mod settings;
 use settings::Settings;
 
@@ -14,9 +11,9 @@ use std::{
 	time,
 };
 
-use rocket::{routes, get, State};
 use structopt::StructOpt;
 use anyhow::Result;
+use tiny_http::{Server, Response, Method};
 
 /// Command line arguments representation
 #[derive(StructOpt)]
@@ -29,37 +26,10 @@ pub struct Cla {
 	pub port: u16,
 }
 
-/// index of the site
-#[get("/")]
-pub fn index(rsp: State<Settings>, cla: State<Cla>) -> Result<File> {
-
-	File::open(rsp.index)
-}
-
-/// any other path
-#[get("/<path..>")]
-pub fn path(rsp: State<Settings>, cla: State<Cla>, path: PathBuf) -> Result<File> {
-	if let Some(s) = rsp.get {
-		for i in s.into_iter() {
-			if path.as_path() == Path::new(&i.uri) {
-				return File::open(i.file);
-			}
-		}
-	}
-
-	File::open(path)
-}
-
 fn main() {
 	let cla = Cla::from_args();
-	let set = Settings::get(cla.settings)?;
+	let set = Settings::get(cla.settings).unwrap();
 	
-	// port setting
-	env::set_var("ROCKET_PORT", format!("{}", cla.port));
-
-	// keep_alive setting
-	env::set_var("ROCKET_KEEP_ALIVE", "0");
-
 	// git repo update
 	thread::spawn(|| loop {
 		thread::sleep(time::Duration::from_secs(1));
@@ -73,10 +43,20 @@ fn main() {
 		}
 	});
 
-	// rocket server init
-	rocket::ignite()
-		.manage(cla)
-		.manage(set)
-		.mount("/", routes![path, index])
-		.launch();
+	// http server init
+	let server = Server::http(format!("0.0.0.0:{}", cla.port)).unwrap();
+
+	// handle requests
+	// TODO
+	for request in server.incoming_requests() {
+		let mut response = Response::from_string("404: url doesn't exist");
+		let url = request.url();
+
+		if let Method::Get = request.method() {
+			println!("{:?}", request.url());
+		}
+
+		request.respond(response);
+	}
+
 }

@@ -8,10 +8,6 @@ use std::{
 };
 
 use anyhow::{Result, Context, anyhow};
-use rocket::{
-	response::{self, content, NamedFile, Responder},
-	request::Request,
-};
 
 // TODO could probably be
 // done with 
