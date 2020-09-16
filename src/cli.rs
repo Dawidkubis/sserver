@@ -4,7 +4,7 @@ use structopt::StructOpt;
 /// Command line arguments representation
 #[derive(StructOpt)]
 pub struct Cli {
-	/// skeleton
+	/// template file (for markdown)
 	#[structopt(parse(from_os_str))]
 	pub skel: PathBuf,
 	/// port

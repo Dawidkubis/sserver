@@ -1,7 +1,7 @@
 use crate::OPT;
 
 use std::fs::read_to_string;
-use std::path::Path;
+use std::path::{Path, PathBuf};
 
 use anyhow::{Error, Result};
 use rocket::http::Status;
@@ -13,12 +13,12 @@ use serde::Deserialize;
 #[derive(Debug, Deserialize)]
 pub struct Get {
 	pub uri: String,
-	pub file: String,
+	pub file: PathBuf,
 }
 
 #[derive(Debug, Deserialize)]
 pub struct Rsp {
-	pub index: String,
+	pub index: PathBuf,
 	pub get: Option<Vec<Get>>,
 }
 

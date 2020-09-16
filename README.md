@@ -1,12 +1,8 @@
 # Sserver
 
 ## To Do
-+ code cleanup
-+ give more explicit information to the user - debugging purposes
 + remove `settings.toml`
 + more templates
-+ doc comments
-+ support more http methods
 
 ## Dependencies
 + `git`

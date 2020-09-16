@@ -28,9 +28,8 @@ fn main() {
 		thread::sleep(time::Duration::from_secs(OPT.refresh));
 		match Command::new("git").arg("pull").output() {
 			Ok(s) => {
-				if cfg!(debug_assertions) {
-					println!("{:?}", s)
-				} else {
+				if cfg!(debug_assertions) || !s.status.success() {
+					eprintln!("{:?}", s)
 				}
 			}
 			Err(e) => eprintln!("{:?}", e),
