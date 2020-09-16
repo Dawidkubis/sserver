@@ -12,9 +12,9 @@ edition = "2018"
 
 [dependencies]
 lazy_static = "1.4.0"
-rocket = "0.4.4"
-comrak = "0.7.0"
-structopt = "0.3.14"
+rocket = "0.4.5"
+comrak = "0.8.2"
+structopt = "0.3.17"
 toml = "0.5.6"
-serde = { version="1.0.110", features=["derive"] }
-anyhow = "1.0.31"
+serde = { version="1.0.116", features=["derive"] }
+anyhow = "1.0.32"

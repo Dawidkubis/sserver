@@ -10,6 +10,7 @@ use std::process::Command;
 use anyhow::{anyhow, Result};
 use rocket::request::Request;
 use rocket::response::{self, content, NamedFile, Responder};
+use comrak::{markdown_to_html, ComrakOptions};
 
 pub enum File {
 	Html(String),
@@ -58,26 +59,20 @@ impl<'r> Responder<'r> for File {
 	}
 }
 
-#[macro_export]
-macro_rules! markdown {
-	($e:expr) => {{
-		use comrak::{markdown_to_html, ComrakOptions};
-		let options = ComrakOptions {
-			unsafe_: true,
-			ext_table: true,
-			ext_strikethrough: true,
-			ext_tasklist: true,
-			ext_superscript: true,
-			..ComrakOptions::default()
-			};
-		markdown_to_html($e, &options)
-		}};
+fn markdown(e: &str) -> String {
+//		ext_table: true,
+//		ext_strikethrough: true,
+//		ext_tasklist: true,
+	let mut options = ComrakOptions::default();
+	options.render.unsafe_ = true;
+	options.extension.superscript = true;
+	markdown_to_html(e, &options)
 }
 
 pub fn md(body: &str) -> Result<String> {
 	let skeleton: String = read_to_string(&OPT.skel)?;
 
-	Ok(skeleton.replace("{}", &markdown!(body)))
+	Ok(skeleton.replace("{}", &markdown(body)))
 }
 
 fn is_exec(path: impl AsRef<Path>) -> bool {
