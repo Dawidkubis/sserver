@@ -25,7 +25,7 @@ fn main() {
 
 	// git repo update
 	thread::spawn(|| loop {
-		thread::sleep(time::Duration::from_secs(1));
+		thread::sleep(time::Duration::from_secs(OPT.refresh));
 		match Command::new("git").arg("pull").output() {
 			Ok(s) => {
 				if cfg!(debug_assertions) {

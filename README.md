@@ -7,8 +7,6 @@
 + more templates
 + doc comments
 + support more http methods
-+ switch to `rockett` http backend
-+ authorization - possibly
 
 ## Dependencies
 + `git`

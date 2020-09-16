@@ -13,4 +13,7 @@ pub struct Cli {
 	/// settings file
 	#[structopt(short, long, parse(from_os_str), default_value = "settings.toml")]
 	pub settings: PathBuf,
+	/// refresh rate (in seconds)
+	#[structopt(short, long, default_value="5")]
+	pub refresh: u64,
 }
